@@ -2,7 +2,20 @@
 // Created by mok_a on 3/12/2023.
 //
 
-#ifndef C_PROJECTS_SERVICES_H
-#define C_PROJECTS_SERVICES_H
+#pragma once
+#include "Material.h"
+#include "Repo.h"
 
-#endif //C_PROJECTS_SERVICES_H
+typedef struct{
+    Repo* repo;
+    Date today;
+
+}Services;
+
+Services* create_service(Repo* repo);
+void add_material_service(Services* ser, Material material);
+void update_material_service(Services* ser, char* name, char* supplier, int quant, Date date);
+void remove_material_service(Services* ser, char* name);
+
+
+

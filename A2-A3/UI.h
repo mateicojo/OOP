@@ -2,7 +2,15 @@
 // Created by mok_a on 3/12/2023.
 //
 
-#ifndef C_PROJECTS_UI_H
-#define C_PROJECTS_UI_H
+#include "Services.h"
+#pragma once
 
-#endif //C_PROJECTS_UI_H
+typedef struct{
+    Services *service;
+} UI;
+
+UI* create_ui();
+
+void start(UI *ui);
+
+void destroy_ui(UI **ui);
