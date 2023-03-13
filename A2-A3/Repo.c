@@ -3,7 +3,9 @@
 //
 
 #include "Repo.h"
+#include "Material.h"
 #include <stdlib.h>
+#include <stdio.h>
 #include <string.h>
 
 Repo* create_repo(){
@@ -12,6 +14,7 @@ Repo* create_repo(){
         return NULL;
     }
     repo->length=0;
+    repo->capacity=5;
     repo->materials=(Material*)malloc(repo->capacity*sizeof(Material));
     return repo;
 }
@@ -30,9 +33,13 @@ void set_materials(Repo* repo, Material* materials){
 }
 
 int material_exists(Repo* repo, char* name){
+    printf("Material added!\n");
     Material* materials=repo->materials;
     for(int i=0;i<repo->length;i++){
+        printf("%d\n",i);
+
         if(!strcmp(get_name(materials[i]),name)){
+            printf("Material added!\n");
             return 1;
         }
     }
@@ -55,9 +62,16 @@ void remove_material(Repo* repo, char* name){
 }
 
 void add_material(Repo* repo, Material material){
-    repo->materials=(Material*)realloc(repo->materials,(repo->length+1)*sizeof(Material));
-    repo->length++;
+    if(repo->length==repo->capacity){
+        printf("Material added!2\n");
+        repo->capacity*=2;
+        repo->materials=(Material*)realloc(repo->materials,(repo->capacity)*sizeof(Material));
+
+    }
+    //repo->length+=1;
     ((Material*)repo->materials)[repo->length]=material;//check this line if errors!
+    printf("Material added!3\n");
+    //repo->materials[repo->length]=material;//check this line if errors!
 }
 
 void update_material(Repo* repo, char* name, char* supplier, int quant, Date date){

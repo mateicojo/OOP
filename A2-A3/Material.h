@@ -32,3 +32,4 @@ void set_quant(Material *material, int quant);
 void set_date(Material *material, Date date);
 
 void destroy_material(Material material);
+void stringcpy(const char* original, char* copy);

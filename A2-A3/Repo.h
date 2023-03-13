@@ -5,7 +5,7 @@
 #include "Material.h"
 #pragma once
 typedef struct{
-    void* materials;
+    Material* materials;
     int length;
     int capacity;
 }Repo;

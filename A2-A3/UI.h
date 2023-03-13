@@ -7,6 +7,7 @@
 
 typedef struct{
     Services *service;
+    int op;
 } UI;
 
 UI* create_ui();
