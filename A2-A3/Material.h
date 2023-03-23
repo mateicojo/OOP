@@ -31,5 +31,9 @@ void set_supplier(Material *material, char* supplier);
 void set_quant(Material *material, int quant);
 void set_date(Material *material, Date date);
 
+int get_day(Material material);
+int get_month(Material material);
+int get_year(Material material);
+
 void destroy_material(Material material);
 void stringcpy(const char* original, char* copy);

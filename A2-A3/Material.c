@@ -20,11 +20,11 @@ Material create_material(char* name, char* supplier, int quant, Date date){
 
     Material material;
     material.name=(char*)malloc((strlen(name)+1)*sizeof(char));
-    stringcpy(material.name,name);
-    //strcpy(material.name,name);
+//    stringcpy(material.name,name);
+    strcpy(material.name,name);
     material.supplier=(char*)malloc((strlen(supplier)+1)*sizeof(char));
-    stringcpy(material.supplier,supplier);
-    //strcpy(material.supplier,supplier);
+//    stringcpy(material.supplier,supplier);
+    strcpy(material.supplier,supplier);
     material.quant=quant;
     material.date= date;
     return material;
@@ -75,4 +75,15 @@ void set_date(Material *material, Date date){
 void destroy_material(Material material){
     free(material.name);
     free(material.supplier);
+}
+
+int get_day(Material material){
+    return material.date.day;
+}
+int get_month(Material material){
+    return material.date.month;
+
+}
+int get_year(Material material){
+    return material.date.year;
 }

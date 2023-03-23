@@ -13,9 +13,11 @@ typedef struct{
 }Services;
 
 Services* create_service(Repo* repo);
-void add_material_service(Services* ser, char* name, char* supplier, int quant, int day, int month, int year);
+Services* add_material_service(Services* ser, char* name, char* supplier, int quant, int day, int month, int year);
 void update_material_service(Services* ser, char* name, char* supplier, int quant, Date date);
-void remove_material_service(Services* ser, char* name);
+Services* remove_material_service(Services* ser, char* name);
+Repo* get_repo(Services* ser);
+
 
 
 
