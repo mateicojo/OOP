@@ -21,6 +21,7 @@ typedef struct{
 }Material;
 
 Material create_material(char* name, char* supplier, int quant, Date date);
+Material* copy_material(Material* material);
 char* get_name(Material material);
 char* get_supplier(Material material);
 int get_quant(Material material);
@@ -35,5 +36,5 @@ int get_day(Material material);
 int get_month(Material material);
 int get_year(Material material);
 
-void destroy_material(Material material);
+void destroy_material(Material* material);
 void stringcpy(const char* original, char* copy);

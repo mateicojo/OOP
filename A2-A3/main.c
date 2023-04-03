@@ -3,8 +3,10 @@
 //
 
 #include "UI.h"
+#include "Tests.h"
 
 int main() {
+    Tests();
     UI *ui = create_ui();
     start(ui);
     return 0;

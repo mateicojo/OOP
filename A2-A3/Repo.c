@@ -19,6 +19,50 @@ Repo* create_repo(){
     return repo;
 }
 
+void destroy_repo(Repo* repo){
+    if(repo==NULL){
+        return;
+    }
+    for(int i=0;i<get_length(repo);i++){
+        if(&repo->materials[i]!=NULL)
+            destroy_material(&repo->materials[i]);
+    }
+    free(repo->materials);
+    free(repo);
+}
+
+Repo* copy_repo(Repo* repo) {
+    Repo* new_repo = (Repo*)malloc(sizeof(Repo));
+    if(new_repo == NULL) {
+        return NULL;
+    }
+
+    new_repo->length = repo->length;
+    new_repo->capacity = repo->capacity;
+    new_repo->materials = (Material*)malloc(new_repo->capacity * sizeof(Material));
+    if(new_repo->materials == NULL) {
+        free(new_repo);
+        return NULL;
+    }
+
+    for(int i = 0; i < repo->length; i++) {
+        Material* material_copy = copy_material(&repo->materials[i]);
+        if(material_copy == NULL) {
+            for(int j = 0; j < i; j++) {
+                free(new_repo->materials[j].name);
+                free(new_repo->materials[j].supplier);
+            }
+            free(new_repo->materials);
+            free(new_repo);
+            return NULL;
+        }
+        new_repo->materials[i] = *material_copy;
+    }
+    return new_repo;
+}
+
+
+
 Material* get_materials(Repo* repo){
     return repo->materials;
 }
@@ -51,7 +95,7 @@ Repo* remove_material(Repo* repo, char* name){
     for (int i=0;i<repo->length;i++){
         if(!strcmp(get_name(materials[i]),name)){
             pos=i;
-            destroy_material(materials[i]);
+            destroy_material(&materials[i]);
         }
     }
     for(int i=pos;i<repo->length-1;i++){
@@ -71,7 +115,6 @@ Repo* add_material(Repo* repo, Material material){
 
     ((Material*) get_materials(repo))[get_length(repo)]=material;//check this line if errors!
     repo->length+=1;
-    //repo->materials[repo->length]=material;//check this line if errors!
     return repo;
 }
 
@@ -111,5 +154,53 @@ Repo* filter(Repo* repo, char* str){
         return repo2;
     }
 }
+Repo* expired_materials(Repo* repo, Date today){
+    Repo* expireds=create_repo();
+    for(int i=0;i< get_length(repo);i++){
+        if(get_year(get_material(repo,i))<today.year){
+            add_material(expireds, get_material(repo,i));
+        }
+        else{
+            if(get_month(get_material(repo,i))<today.month){
+                add_material(expireds, get_material(repo,i));
+            }
+            else{
+                if(get_day(get_material(repo,i))<today.day){
+                    add_material(expireds, get_material(repo,i));
+                }
+            }
+        }
+    }
+    if(expireds==NULL){
+        return NULL;
+    }
+    return expireds;
+}
+
+void set_material_on_pos(Repo* repo, Material material, int index){
+    repo->materials[index]=material;
+}
+
+Repo* sort_by_quant(Repo* repo,char* supplier,int min_quant){
+    Repo* repo2=create_repo();
+    for(int i=0;i< get_length(repo);i++){
+        if(!strcmp(get_supplier(get_material(repo,i)),supplier) && get_quant(get_material(repo,i))<min_quant){
+            add_material(repo2, get_material(repo,i));
+        }
+    }
+
+    for(int i=0;i< get_length(repo2)-1;i++){
+        for(int j=i+1;j< get_length(repo2);j++){
+            if(get_quant(get_material(repo2,i))> get_quant(get_material(repo2,j))){
+                Material temp = get_material(repo2,i);
+                set_material_on_pos(repo2, get_material(repo2,j),i);
+                set_material_on_pos(repo2,temp,j);
+            }
+        }
+    }
+
+    return repo2;
+}
+
 
 
