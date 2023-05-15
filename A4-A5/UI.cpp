@@ -1,6 +1,8 @@
 
 #include "UI.h"
 #include <iostream>
+#include <cstdlib>
+
 UI::UI(){
 }
 void UI::printRepo(Repo repo){
@@ -99,8 +101,27 @@ void UI::printAdminMenu(){
     }
 }
 
+
+
 void UI::printUserMenu(){
-    Repo watchlist;
+    Repo* watchlist1;
+    printf("Choose the format of the watchlist (set to CSV by default):\n");
+    printf("[1] CSV\n");
+    printf("[2] HTML\n");
+    printf("[0] Exit.\n");
+    cin >> operation;
+    if (operation == "1") {
+        service.getRepo().setWatchlistFormat("CSV");
+        watchlist1 = new RepoCSV();
+    }
+    if (operation == "2"){
+        service.getRepo().setWatchlistFormat("HTML");
+        watchlist1 = new RepoHTML();
+    }
+    if (operation == "0")
+        this->printFirstMenu();
+    Repo& watchlist = dynamic_cast<Repo&>(*watchlist1);
+//    watchlist.readWatchlistFromFile(); // do not uncomment this line
     while(true){
         printf("[1] See the tutorials from a presenter.\n");
         printf("[2] Remove a tutorial.\n");
@@ -126,6 +147,7 @@ void UI::printUserMenu(){
                     if(operation2=="1"){
                         Tutorial add=this->getService().getRepo().getTutorial(index);
                         this->getService().addTutorialSer_user(watchlist,add);
+                        watchlist.writeWatchlistToFile();
                         index++;
                     }
                     if(operation2=="2"){
@@ -151,6 +173,7 @@ void UI::printUserMenu(){
                         if(operation2=="1"){
                             Tutorial add=this->getService().getRepo().getTutorial(index);
                             this->getService().addTutorialSer_user(watchlist,add);
+                            watchlist.writeWatchlistToFile();
                             index++;
                         }
                         if(operation2=="2"){
@@ -173,12 +196,14 @@ void UI::printUserMenu(){
         }
         if(operation=="3"){
             printRepo(watchlist);
+            openWatchlist(watchlist.getFilename());
         }
         if(operation=="2"){
             string title;
             printf("Title of the tutorial you want to remove:\n");
             getline(cin>>ws,title);
             this->getService().removeTutorialSer_user(watchlist,title);
+            watchlist.writeWatchlistToFile();
         }
     }
 }
@@ -190,4 +215,9 @@ Services& UI::getService(){
 void UI::printTutorial(int index){
     Tutorial tutorial=this->getService().getRepo().getTutorial(index);
     cout << tutorial.getTitle() << " - " << tutorial.getPresenter() << " - " << tutorial.getDuration() << "s - " << tutorial.getLikes() << " - " << tutorial.getLink() << "\n";
+}
+
+void UI::openWatchlist(string filename) {
+    string command = "start " + filename;
+    system(command.c_str());
 }

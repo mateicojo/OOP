@@ -5,8 +5,10 @@
 #pragma once
 #include <iostream>
 #include "Service.h"
-#include "Repo.h"
+#include "RepoFile.h"
 #include "Domain.h"
+#include <algorithm>
+
 using namespace std;
 class UI{
 private:
@@ -22,4 +24,5 @@ public:
     void printAdminMenu();
     void printUserMenu();
     void printTutorial(int index);
+    void openWatchlist(string filename);
 };

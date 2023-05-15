@@ -4,7 +4,7 @@
 
 #pragma once
 #include "Domain.h"
-#include "Repo.h"
+#include "RepoFile.h"
 #include "Service.h"
 #include <cassert>
 
@@ -127,6 +127,18 @@ void test_updateTutorialSer() {
     assert(t.getLink() == "https://example.com/cpp-updated");
 }
 
+void testAddTutorialSer_user() {
+    Services services;
+
+    Repo watchlist;
+
+    Tutorial tutorial1("Introduction to C++", "John Smith", 60, 100, "https://example.com/cpp-intro");
+
+    services.addTutorialSer_user(watchlist, tutorial1);
+
+    assert(watchlist.tutorialExists(tutorial1));
+}
+
 void test_removeTutorialSer() {
     Repo repository;
     Services services=Services();
@@ -135,10 +147,22 @@ void test_removeTutorialSer() {
     assert(services.getRepo().getNumTutorials() == 0);
 }
 
+
+void testRemoveTutorialSer_user() {
+    Services services;
+    Repo watchlist;
+    Tutorial tutorial1("Introduction to C++", "John Smith", 60, 100, "https://example.com/cpp-intro");
+    watchlist.addTutorial(tutorial1);
+    services.removeTutorialSer_user(watchlist, "Introduction to C++");
+    assert(!watchlist.tutorialExists(tutorial1));
+}
+
 void testServices(){
     test_addTutorialSer();
     test_removeTutorialSer();
     test_updateTutorialSer();
+    testAddTutorialSer_user();
+    testRemoveTutorialSer_user();
     printf("Services tested.\n");
 }
 
