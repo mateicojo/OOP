@@ -24,5 +24,4 @@ public:
     void printAdminMenu();
     void printUserMenu();
     void printTutorial(int index);
-    void openWatchlist(string filename);
 };

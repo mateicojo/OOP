@@ -13,7 +13,7 @@ public:
 static void validate_add_repo(Repo repository, Tutorial add);
 static void validate_update_repo(Repo repository, Tutorial update);
 static void validate_remove_repo(Repo repository, string title);
-static void validate_useradd_service(Repo repository, Repo watchlist, Tutorial add);
-static void validate_userremove_service(Repo repository, Repo watchlist, string title);
-static void validate_operation_ui(string operation);
+//static void validate_useradd_service(Repo repository, Repo watchlist, Tutorial add);
+//static void validate_userremove_service(Repo repository, Repo watchlist, string title);
+//static void validate_operation_ui(string operation);
 };

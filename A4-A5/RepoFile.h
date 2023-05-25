@@ -19,7 +19,7 @@ public:
     virtual void writeWatchlistToFile(){
         return;
     }
-    virtual void readWatchlistFromFile(){
+    virtual void showWatchlistFromFile(){
         return;
     }
     void addTutorial(Tutorial& tutorial);
@@ -42,13 +42,13 @@ class RepoCSV: public Repo{
     public:
     RepoCSV();
     void writeWatchlistToFile();
-    void readWatchlistFromFile();
+    void showWatchlistFromFile() override;
 };
 
 class RepoHTML: public Repo{
 public:
     RepoHTML();
     void writeWatchlistToFile();
-    void readWatchlistFromFile();
+    void showWatchlistFromFile() override;
 };
 

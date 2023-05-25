@@ -2,6 +2,7 @@
 #include "UI.h"
 #include <iostream>
 #include <cstdlib>
+#include <windows.h>
 
 UI::UI(){
 }
@@ -196,7 +197,7 @@ void UI::printUserMenu(){
         }
         if(operation=="3"){
             printRepo(watchlist);
-            openWatchlist(watchlist.getFilename());
+            watchlist.showWatchlistFromFile();
         }
         if(operation=="2"){
             string title;
@@ -217,7 +218,3 @@ void UI::printTutorial(int index){
     cout << tutorial.getTitle() << " - " << tutorial.getPresenter() << " - " << tutorial.getDuration() << "s - " << tutorial.getLikes() << " - " << tutorial.getLink() << "\n";
 }
 
-void UI::openWatchlist(string filename) {
-    string command = "start " + filename;
-    system(command.c_str());
-}

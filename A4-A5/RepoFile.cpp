@@ -3,6 +3,7 @@
 #include <fstream>
 #include <string>
 #include "Validator.h"
+#include <windows.h>
 using namespace std;
 
 
@@ -33,7 +34,6 @@ vector<string> split(const string& str, const string& delim)
 }
 
 void Repo::readData(string filename){
-    //TODO:implement this
     //reads file from filename, updates repo
     ifstream ins;
     ins.open(filename);
@@ -122,7 +122,6 @@ void Repo::addTenEntities(){
     elements.push_back(t9);
     Tutorial t10=Tutorial("Software Testing Techniques", "Mike", 60, 100, "https://example.com/software-testing");
     elements.push_back(t10);
-//    readData(getFilename());
 }
 
 bool Repo::tutorialExists(Tutorial tutorial) {
@@ -147,17 +146,9 @@ void Repo::setWatchlistFormat(string format) {
     this->watchlist_format=format;
 }
 
-void RepoCSV::readWatchlistFromFile() {
-    ifstream ins;
-    ins.open("../Watchlist.csv");
-    string line;
-    while(getline(ins,line)){
-        int i=0;
-        vector<string> r= split(line,",");
-        Tutorial t(r[0],r[1],stoi(r[2]),stoi(r[3]),r[4]);
-        this->elements.push_back(t);
-    }
-    ins.close();
+void RepoCSV::showWatchlistFromFile() {
+/*opens the watchlist.csv file using windows.h */
+    ShellExecute(NULL, "open", "../Watchlist.csv", NULL, NULL, SW_SHOWNORMAL);
 }
 
 void RepoCSV::writeWatchlistToFile() {
@@ -169,21 +160,9 @@ void RepoCSV::writeWatchlistToFile() {
     ofs.close();
 }
 
-void RepoHTML::readWatchlistFromFile() {
-    ifstream ins;
-    ins.open("../Watchlist.html");
-    string line;
-    for(int i=0;i<8;i++){
-        getline(ins,line);
-    }
-    while(getline(ins,line)){
-        int i=0;
-        vector<string> r= split(line,"<td>");
-//        cout<<r[0]<<r[1]<<r[2]<<r[3]<<r[4]<<endl;
-//        Tutorial t(r[0],r[1],stoi(r[2]),stoi(r[3]),r[4]);
-//        this->elements.push_back(t);
-    }
-    ins.close();
+void RepoHTML::showWatchlistFromFile() {
+/*opens the watchlist.html file using windows.h */
+    ShellExecute(NULL, "open", "../Watchlist.html", NULL, NULL, SW_SHOWNORMAL);
 }
 
 void RepoHTML::writeWatchlistToFile(){
